@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Book {
+  id          String    @id @default(uuid())
+  title       String
+  author      String
+  isbn        String?   @unique
+  publisher   String?
+  genre       String?
+  description String?
+  coverImage  String?
+  pageCount   Int?
+  publicationYear Int?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  status      BookStatus @default(AVAILABLE)
+  checkouts   Checkout[]
+}
+
+model Checkout {
+  id          String    @id @default(uuid())
+  book        Book      @relation(fields: [bookId], references: [id])
+  bookId      String
+  borrowerName String
+  checkoutDate DateTime  @default(now())
+  dueDate     DateTime
+  returnDate  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum BookStatus {
+  AVAILABLE
+  CHECKED_OUT
+}
