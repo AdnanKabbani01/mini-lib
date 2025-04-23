@@ -12,6 +12,7 @@ import {
   StoredMessage,
 } from "@/lib/message-storage";
 import { ArchiveX } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 interface Message {
   role: "user" | "assistant";
@@ -329,7 +330,13 @@ export function Assistant({ initialPrompt, darkMode = true }: AssistantProps) {
                 message.role === "user" ? "rounded-br-none" : "rounded-bl-none"
               }`}
             >
-              <p className="whitespace-pre-wrap">{message.content}</p>
+              {message.role === "assistant" ? (
+                <div className="whitespace-pre-wrap">
+                  <ReactMarkdown>{message.content}</ReactMarkdown>
+                </div>
+              ) : (
+                <p className="whitespace-pre-wrap">{message.content}</p>
+              )}
             </Card>
           </div>
         ))}
