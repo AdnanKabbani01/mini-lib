@@ -30,6 +30,12 @@ export function Navbar() {
           >
             Checkouts
           </Link>
+          <Link
+            href="/assistant"
+            className="text-sm font-medium transition-colors hover:text-blue-600 dark:hover:text-blue-500"
+          >
+            AI Assistant
+          </Link>
           <Button variant="default" size="sm" asChild>
             <Link href="/books/add">Add Book</Link>
           </Button>
